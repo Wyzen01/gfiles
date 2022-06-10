@@ -22,21 +22,15 @@ autoload -U compinit && compinit
 autoload -U promptinit && promptinit
 # }}}
 
-# Theme loader {{{
-THEME="gabriel"
-
-[[ ! -z $THEME ]] && source "$ZSHDIR/themes/$THEME.zsh-theme"
-# }}}
-
 # Plugin loader {{{
 plugins=(
   zsh-z
   git
   shrink-path
-  zsh-syntax-highlighting/zsh-syntax-highlighting
+  # zsh-syntax-highlighting/zsh-syntax-highlighting
 )
 
-[[ -z "$NEOVIM" ]] && plugins+=(zsh-autosuggestions/zsh-autosuggestions)
+# [[ -z "$NEOVIM" ]] && plugins+=(zsh-autosuggestions/zsh-autosuggestions)
 
 foreach plugin in $plugins
   plugin_path="$ZSHDIR/plugins/$plugin.plugin.zsh" 
@@ -45,16 +39,20 @@ foreach plugin in $plugins
 end
 # }}}
 
+# Theme loader {{{
+THEME="gabriel"
+
+[[ ! -z $THEME ]] && source "$ZSHDIR/themes/$THEME.zsh-theme"
+# }}}
+
 # Exports {{{
 export DEFAULT_USER="gabrielmoreno"
 
 export CLICOLOR=1
 export LSCOLORS="GxGxBxDxCxEgEdxbxgxcxd"
-# export LS_COLORS="di=1;36"
-# export EXA_COLORS="da=36"
 
-export EDITOR="nvim"
-export EDITORRC="$HOME/.config/nvim/init.vim"
+export EDITOR="vim"
+export EDITORRC="$HOME/.vimrc"
 
 export SSHRC="$HOME/.ssh/config"
 
@@ -82,7 +80,7 @@ lazy_load_nvm() {
 # }}}
 
 # Aliases {{{
-alias ls="exa"
+alias ls="ls"
 
 alias l="ls"
 alias la="ls -a"
@@ -124,9 +122,8 @@ alias themeconfig="$EDITOR $ZSHDIR/themes/$THEME.zsh-theme"
 # }}}
 
 # Fetch {{{
-if [[ $TERM_PROGRAM == "iTerm.app" && -z "$NEOVIM" ]]; then 
-  fetch
-fi
+# if [[ $TERM_PROGRAM == "iTerm.app" && -z "$NEOVIM" ]]; then 
+#   fetch
+# fi
 # }}}
-#
 
