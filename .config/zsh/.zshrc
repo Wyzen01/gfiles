@@ -40,7 +40,7 @@ end
 # }}}
 
 # Theme loader {{{
-THEME="gabriel"
+THEME="spaceship"
 
 [[ ! -z $THEME ]] && source "$ZSHDIR/themes/$THEME.zsh-theme"
 # }}}
@@ -109,6 +109,7 @@ alias nptest="npm run test"
 alias npstart="npm run start"
 alias npbuild="npm run build"
 
+alias e="emacs"
 alias vim="$EDITOR"
 alias fetch="macfetch"
 alias pingtest="prettyping 8.8.8.8"
