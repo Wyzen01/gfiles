@@ -223,14 +223,10 @@ endfunction
 function StatusLineNormal() abort
   let b:leftstatus = ''
   let b:rightstatus = ''
+
+  let b:leftstatus .= ' '
   
   let b:branch = FugitiveHead()
-
-  hi SshGroup guibg=#fafafa guifg=#0d0d0d
-
-  let b:leftstatus .= "%#SshGroup#    %#StatusLine#"
-
-  let b:leftstatus .= '   '
 
   if !empty(b:branch)
     let b:leftstatus .= ' %{b:branch}   '
@@ -249,7 +245,7 @@ function StatusLineNormal() abort
     let b:rightstatus .= '    %{&ft}'
   endif
 
-  let b:rightstatus .= '   '
+  let b:rightstatus .= ' '
 
   return b:leftstatus . '%=' . b:rightstatus
 endfunction
