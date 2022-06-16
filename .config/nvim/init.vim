@@ -24,13 +24,13 @@ colorscheme gabriel
 
 set background=dark
 set backspace=indent,eol,start
+set cmdheight=0
 set clipboard=unnamedplus
 set encoding=utf-8
 set fileencoding=utf-8
 set laststatus=3
 set mouse=a
 set shiftwidth=2
-set shortmess=FI
 set signcolumn=number
 set so=15
 set softtabstop=2
