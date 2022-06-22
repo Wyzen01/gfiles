@@ -53,18 +53,6 @@ let g:mapleader = ' '
 
 let g:closetag_filenames = '*.html,*.js,*.jsx,*.ts,*.tsx'
 
-let g:indentLine_char = "▏"
-let g:indent_blankline_space_char = " "
-let g:indent_blankline_filetype_exclude = [
-  \ "help",
-  \ "term",
-  \ "packer",
-  \ "dashboard",
-  \ "NvimTree",
-  \ ]
-let g:indent_blankline_show_first_indent_level = v:true
-let g:indent_blankline_show_trailing_blankline_indent = v:false
-
 let g:coc_global_extensions = [
   \ 'coc-json',
   \ 'coc-pairs',
@@ -76,11 +64,6 @@ let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-explorer',
   \ ]
-let g:coc_explorer_global_presets = {
-  \ 'floating': {
-  \   'position': 'floating',
-  \ },
-  \ }
 
 let g:signify_sign_add = '┃'
 let g:signify_sign_delete = '┃'
@@ -123,42 +106,11 @@ let g:endoflines = {
   \ 'windows': 'crlf'
   \ }
 
-let g:airline#extensions#tabline#enabled = 1
-
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline_symbols = {
-  \ 'linenr': ' ㏑:', 
-  \ 'modified': '+', 
-  \ 'whitespace': '☲', 
-  \ 'branch': '', 
-  \ 'ellipsis': '...', 
-  \ 'paste': 'PASTE', 
-  \ 'maxlinenr': '☰', 
-  \ 'readonly': '⊝', 
-  \ 'spell': 'SPELL', 
-  \ 'space': ' ', 
-  \ 'dirty': '!',
-  \ 'colnr': '  ℅: ', 
-  \ 'keymap': 'Keymap:', 
-  \ 'crypt': '🔒', 
-  \ 'notexists': ''
-  \ }
-
-let g:ctrlp_map = '<leader>pp'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = {
-	\ 'dir': '\v[\/](build|node_modules|target|dist)|(\.(swp|ico|git|svn))$',
-	\ 'file': '\v\.(dll|min.js|min.css|jpg|png|mp4)$'
-	\ }
-
-nmap <leader>sp :TSHighlightCapturesUnderCursor<CR>
-nmap <leader>spp :TSPlaygroundToggle<CR>
-
+nmap <silent> <leader>tn :tabnew<CR>
 nmap <silent> <leader><left> :tabprev<CR>
 nmap <silent> <leader><right> :tabnext<CR>
 
-nmap <F2> <Plug>(coc-rename)
+nmap <silent> R <Plug>(coc-rename)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -170,10 +122,9 @@ vmap <silent> <leader>cc :TComment<CR>
 nmap <silent> <leader>ff :Telescope find_files<CR>
 nmap <silent> <leader>fg :Telescope live_grep<CR>
 nmap <silent> <leader>nn :CocCommand explorer<CR>
-nmap <silent> <leader>ss :call SynStack()<CR>
+nmap <silent> <leader>ss :SynStack<CR>
 nmap <silent> <leader>coc :CocConfig<CR>
 
-nmap <silent> <leader>mk :FloatermNew --wintype=float --width=0.8 --height=0.8 --position=center --autoclose=0 make<CR>
 nmap <silent> <leader>lzg :FloatermNew --wintype=float --width=0.8 --height=0.8 --position=center lazygit<CR>
 
 vmap <silent> <leader>so :sort<CR>
@@ -189,6 +140,8 @@ tnoremap <silent> <C-k> <C-\><C-n><C-w>k
 tnoremap <silent> <C-l> <C-\><C-n><C-w>l
 
 nnoremap <silent> K :call ShowDocumentation()<CR>
+
+command! -nargs=0 SynStack :call SynStack()
 
 autocmd FileType floaterm call FloatermSettings()
 
