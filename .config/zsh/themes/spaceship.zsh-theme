@@ -17,7 +17,7 @@ git_branch() {
 
   local dirty=$(git status --porcelain 2> /dev/null)
 
-  [[ ! -z $dirty ]] && echo "%b%fon %B%F{magenta}🌳 $branch %F{red}[!?]%b%f " || echo "%b%fon %B%F{magenta}🌳 $branch%f%b "
+  [[ ! -z $dirty ]] && echo "%b%fon %B%F{magenta}🚀 $branch %F{red}[!?]%b%f " || echo "%b%fon %B%F{magenta}🚀 $branch%f%b "
 }
 
 package_version() {
@@ -40,7 +40,7 @@ node_version() {
 
 
 symbol() {
-  echo "%B%F{%(?.green.red)}➜%f%b "
+  echo "%B%F{%(?.green.red)}❯%f%b "
 }
 
 PROMPT=$'\n'
