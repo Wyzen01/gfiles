@@ -27,10 +27,10 @@ plugins=(
   zsh-z
   git
   shrink-path
-  # zsh-syntax-highlighting/zsh-syntax-highlighting
+  zsh-syntax-highlighting/zsh-syntax-highlighting
 )
 
-# [[ -z "$NEOVIM" ]] && plugins+=(zsh-autosuggestions/zsh-autosuggestions)
+[[ -z "$NEOVIM" ]] && plugins+=(zsh-autosuggestions/zsh-autosuggestions)
 
 foreach plugin in $plugins
   plugin_path="$ZSHDIR/plugins/$plugin.plugin.zsh" 
@@ -51,8 +51,8 @@ export DEFAULT_USER="gabrielmoreno"
 export CLICOLOR=1
 export LSCOLORS="GxGxBxDxCxEgEdxbxgxcxd"
 
-export EDITOR="vim"
-export EDITORRC="$HOME/.vimrc"
+export EDITOR="nvim"
+export EDITORRC="$HOME/.config/nvim/init.vim"
 
 export SSHRC="$HOME/.ssh/config"
 
@@ -123,8 +123,8 @@ alias themeconfig="$EDITOR $ZSHDIR/themes/$THEME.zsh-theme"
 # }}}
 
 # Fetch {{{
-# if [[ $TERM_PROGRAM == "iTerm.app" && -z "$NEOVIM" ]]; then 
-#   fetch
-# fi
+if [[ $TERM_PROGRAM == "iTerm.app" && -z "$NEOVIM" ]]; then 
+  fetch
+fi
 # }}}
 
