@@ -1,93 +1,96 @@
-set nocompatible
+call plug#begin()
 
-filetype plugin indent on
+" Airline
+Plug 'joshdick/onedark.vim'
 
-call plug#begin('~/.vim/plugged')
-
+" Colorscheme
+Plug 'arzg/vim-colors-xcode'
 Plug 'gantoreno/vim-gabriel'
+Plug 'morhetz/gruvbox'
+Plug 'joshdick/onedark.vim'
 
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-
-Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': 'yarn install' }
-
-Plug 'tomtom/tcomment_vim'
-
+" Git
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
+
+" File browsing
+Plug 'kien/ctrlp.vim'
+Plug 'preservim/nerdtree'
+
+" Language
+Plug 'dense-analysis/ale'
 Plug 'sheerun/vim-polyglot'
+
+" Tools
+Plug 'tomtom/tcomment_vim'
 Plug 'voldikss/vim-floaterm'
+
+" Formatting
+Plug 'ruby-formatter/rufo-vim'
+Plug 'prettier/vim-prettier', { 
+  \ 'do': 'yarn install',
+  \ 'for': [
+  \   'css',
+  \   'graphql',
+  \   'html',
+  \   'javascript', 
+  \   'json',
+  \   'markdown',
+  \   'scss',
+  \   'typescript',
+  \   'yaml',
+  \   ],
+  \ }
 
 call plug#end()
 
-colorscheme gabriel
+colorscheme xcodewwdc
 
+set nocompatible
+set nohls
+set smartindent
+set splitbelow
+set splitright
+set number
+set noswapfile
+set cursorline
+set termguicolors
+
+set t_Co=256
 set background=dark
 set backspace=indent,eol,start
-set clipboard=unnamedplus
-set encoding=utf-8
-set fileencoding=utf-8
-set laststatus=3
-set mouse=a
-set shiftwidth=2
-set shortmess=FI
+set laststatus=0
+set nuw=5
+set showtabline=1
 set signcolumn=number
 set so=15
 set softtabstop=2
+set tabstop=2
+set cmdheight=0
 
-set cursorline
-set expandtab
-set hidden
-set nohlsearch
-set noshowcmd
-set noshowmode
-set number
-set splitbelow
-set splitright
-set termguicolors
-set relativenumber
+set mouse+=a
+set path+=**
 
-set statusline=%!StatusLineNormal()
+let $VIM=1
 
-let g:mapleader = ' '
+let g:rufo_auto_formatting = 1
 
-let g:closetag_filenames = '*.html,*.js,*.jsx,*.ts,*.tsx'
+let g:mapleader=' '
 
-let g:indentLine_char = "▏"
-let g:indent_blankline_space_char = " "
-let g:indent_blankline_filetype_exclude = [
-  \ "help",
-  \ "term",
-  \ "packer",
-  \ "dashboard",
-  \ "NvimTree",
-  \ ]
-let g:indent_blankline_show_first_indent_level = v:true
-let g:indent_blankline_show_trailing_blankline_indent = v:false
-
-let g:coc_global_extensions = [
-  \ 'coc-json',
-  \ 'coc-pairs',
-  \ 'coc-emmet',
-  \ 'coc-python',
-  \ 'coc-eslint',
-  \ 'coc-tsserver',
-  \ 'coc-prettier',
-  \ 'coc-snippets',
-  \ 'coc-explorer',
-  \ ]
-let g:coc_explorer_global_presets = {
-  \ 'floating': {
-  \   'position': 'floating',
-  \ },
+let g:ctrlp_map = '<leader>ff'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\v[\/](build|node_modules|target|dist)|(\.(swp|ico|git|svn))$',
+  \ 'file': '\v\.(dll|min.js|min.css|jpg|png|mp4)$'
   \ }
 
-let g:signify_sign_add = '┃'
-let g:signify_sign_delete = '┃'
-let g:signify_sign_change = '┃'
-let g:signify_sign_changedelete = '┃'
-let g:signify_sign_delete_first_line = '┃'
-let g:signify_sign_show_count = 0
+let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeDirArrowExpandable = "+"
+let g:NERDTreeDirArrowCollapsible = "-"
+
+let g:prettier#autoformat = 1
+let g:prettier#exec_cmd_async = 1
+let g:prettier#quickfix_enabled = 0
 
 let g:floaterm_shell = 'NEOVIM=1 '.&shell
 let g:floaterm_height = 0.25
@@ -96,109 +99,88 @@ let g:floaterm_wintype = 'split'
 let g:floaterm_position = 'botright'
 let g:floaterm_keymap_toggle = '<leader>tt'
 
-let g:currentmode={
-  \ 'n': 'Normal',
-  \ 'no': 'Normal·Operator Pending',
-  \ 'v': 'Visual',
-  \ 'V': 'Visual Line',
-  \ '^V': 'Visual Block',
-  \ 's': 'Select',
-  \ 'S': 'S Line',
-  \ '^S': 'S Block',
-  \ 'i': 'Insert',
-  \ 'R': 'Replace',
-  \ 'Rv': 'V Replace',
-  \ 'c': 'Command',
-  \ 'cv': 'Vim Ex',
-  \ 'ce': 'Ex',
-  \ 'r': 'Prompt',
-  \ 'rm': 'More',
-  \ 'r?': 'Confirm',
-  \ '!': 'Shell',
-  \ 't': 'Terminal'
-  \ }
+hi VertSplit guibg=none guifg=#383b44
+hi Comment guifg=#61a858
 
-let g:endoflines = {
-  \ 'unix': 'lf',
-  \ 'windows': 'crlf'
-  \ }
+nmap <silent><leader>nn :NerdTree<cr>
+nmap <silent><leader>ss :SynStack<cr>
 
-let g:airline#extensions#tabline#enabled = 1
+nmap <silent><leader><up> :tabnew<cr>
+nmap <silent><leader><left> :tabprev<cr>
+nmap <silent><leader><right> :tabnext<cr>
+nmap <silent><leader><down> :tabclose<cr>
 
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline_symbols = {
-  \ 'linenr': ' ㏑:', 
-  \ 'modified': '+', 
-  \ 'whitespace': '☲', 
-  \ 'branch': '', 
-  \ 'ellipsis': '...', 
-  \ 'paste': 'PASTE', 
-  \ 'maxlinenr': '☰', 
-  \ 'readonly': '⊝', 
-  \ 'spell': 'SPELL', 
-  \ 'space': ' ', 
-  \ 'dirty': '!',
-  \ 'colnr': '  ℅: ', 
-  \ 'keymap': 'Keymap:', 
-  \ 'crypt': '🔒', 
-  \ 'notexists': ''
-  \ }
+nmap <silent><leader>cc :TComment<cr>
+vmap <silent><leader>cc :TComment<cr>
 
-let g:ctrlp_map = '<leader>pp'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = {
-	\ 'dir': '\v[\/](build|node_modules|target|dist)|(\.(swp|ico|git|svn))$',
-	\ 'file': '\v\.(dll|min.js|min.css|jpg|png|mp4)$'
-	\ }
+inoremap <c-space> <c-x><c-p>
 
-nmap <leader>sp :TSHighlightCapturesUnderCursor<CR>
-nmap <leader>spp :TSPlaygroundToggle<CR>
-
-nmap <silent> <leader><left> :tabprev<CR>
-nmap <silent> <leader><right> :tabnext<CR>
-
-nmap <F2> <Plug>(coc-rename)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-nmap <silent> <leader>cc :TComment<CR>
-vmap <silent> <leader>cc :TComment<CR>
-
-nmap <silent> <leader>ff :Telescope find_files<CR>
-nmap <silent> <leader>fg :Telescope live_grep<CR>
-nmap <silent> <leader>nn :CocCommand explorer<CR>
-nmap <silent> <leader>ss :call SynStack()<CR>
-nmap <silent> <leader>coc :CocConfig<CR>
-
-nmap <silent> <leader>mk :FloatermNew --wintype=float --width=0.8 --height=0.8 --position=center --autoclose=0 make<CR>
-nmap <silent> <leader>lzg :FloatermNew --wintype=float --width=0.8 --height=0.8 --position=center lazygit<CR>
-
-vmap <silent> <leader>so :sort<CR>
-
-noremap <silent> <C-h> <C-\><C-n><C-w>h
-noremap <silent> <C-j> <C-\><C-n><C-w>j
-noremap <silent> <C-k> <C-\><C-n><C-w>k
-noremap <silent> <C-l> <C-\><C-n><C-w>l
+nnoremap <c-h> <c-w><left>
+nnoremap <c-j> <c-w><down>
+nnoremap <c-k> <c-w><up>
+nnoremap <c-l> <c-w><right>
 
 tnoremap <silent> <C-h> <C-\><C-n><C-w>h
 tnoremap <silent> <C-j> <C-\><C-n><C-w>j
 tnoremap <silent> <C-k> <C-\><C-n><C-w>k
 tnoremap <silent> <C-l> <C-\><C-n><C-w>l
 
-nnoremap <silent> K :call ShowDocumentation()<CR>
+autocmd FileType nerdtree setlocal nocursorline
 
 autocmd FileType floaterm call FloatermSettings()
 
-autocmd BufEnter * if winnr('$') == 1 && &filetype == 'coc-explorer' | q | endif
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-autocmd BufNewFile,BufRead *.ejs set filetype=ejs
-autocmd BufNewFile,BufRead *.config set filetype=yaml
-autocmd BufNewFile,BufRead *.js,*.jsx set filetype=javascript.jsx
-autocmd BufNewFile,BufRead *.tsx,*.ts set filetype=typescript.tsx
+autocmd BufWritePre *.js,*.html,*.ts,*.json,*.jsx,*.tsx PrettierAsync
+
+autocmd FileType c setl ofu=ccomplete#CompleteCpp
+autocmd FileType css setl ofu=csscomplete#CompleteCSS
+autocmd FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
+autocmd FileType php setl ofu=phpcomplete#CompletePHP
+autocmd FileType ruby,eruby setl ofu=rubycomplete#Complete
+
+autocmd BufNewFile,BufRead * call s:DetectShebang()
 autocmd BufNewFile,BufRead *.zsh-theme set filetype=zsh
+
+autocmd VimLeave * call CloseTerminal()
+
+command -nargs=0 NerdTree :call NerdTree()
+command -nargs=0 SynStack :call SynStack()
+
+function! IsNERDTreeOpen()
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+function! CheckIfCurrentBufferIsFile()
+  return strlen(expand('%')) > 0
+endfunction
+
+function! NerdTree()
+  if CheckIfCurrentBufferIsFile()
+    if IsNERDTreeOpen()
+      NERDTreeClose
+    else
+      NERDTreeFind
+    endif
+  else
+    NERDTree
+  endif
+
+  silent NERDTreeMirror
+endfunction
+
+function! Terminal() abort
+	term ++rows=10
+endfunction
+
+function! CloseTerminal() abort
+  let pane_count = system("workspace count")
+
+  if pane_count > 1
+     silent !workspace down 2> /dev/null
+  endif
+endfunction
 
 function SynStack()
   if !exists("*synstack")
@@ -210,65 +192,11 @@ function SynStack()
   echo groups
 endfunction
 
-function ShowDocumentation() abort
-  if index(['vim', 'help'], &filetype) >= 0
-    execute 'h ' . expand('<cword>')
-
-    return
+fun! s:DetectShebang()
+  if getline(1) == '#!/bin/sh'
+    set ft=zsh
   endif
-
-  call CocAction('doHover')
-endfunction
-
-function StatusLineNormal() abort
-  let b:leftstatus = ''
-  let b:rightstatus = ''
-  
-  let b:branch = FugitiveHead()
-
-  hi SshGroup guibg=#fafafa guifg=#0d0d0d
-
-  let b:leftstatus .= "%#SshGroup#    %#StatusLine#"
-
-  let b:leftstatus .= '   '
-
-  if !empty(b:branch)
-    let b:leftstatus .= ' %{b:branch}   '
-  endif
-
-  let b:leftstatus .= ' %{StatusErrors()} '
-  let b:leftstatus .= ' %{StatusWarnings()}   '
-
-  let b:leftstatus .= '-- %{toupper(g:currentmode[mode()])} --'
-
-  let b:rightstatus .= 'Spaces: %{&shiftwidth}'
-  let b:rightstatus .= '   %{empty(&fenc)?toupper(&fenc):toupper(&enc)}'
-  let b:rightstatus .= '   %{toupper(g:endoflines[&ff])}'
-
-  if !empty(&ft) && &ft != 'TelescopePrompt'
-    let b:rightstatus .= '    %{&ft}'
-  endif
-
-  let b:rightstatus .= '   '
-
-  return b:leftstatus . '%=' . b:rightstatus
-endfunction
-
-function StatusWarnings() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-
-  if empty(info) | return '0' | endif
-
-  return info['warning']
-endfunction
-
-function StatusErrors() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-
-  if empty(info) | return '0' | endif
-
-  return info['error']
-endfunction
+endfun
 
 function FloatermSettings() abort
   setlocal nonumber
@@ -278,12 +206,7 @@ function FloatermSettings() abort
   setlocal signcolumn=no
 endfunction
 
-lua << EOF
-require('telescope').setup({
-  defaults = {
-    mappings = { i = { ['<esc>'] = require('telescope.actions').close } },
-    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-    file_ignore_patterns = { 'node_modules', '.git', 'build' },
-  },
-})
-EOF
+augroup nerdtreehidecwd
+	autocmd!
+	autocmd FileType nerdtree setlocal conceallevel=3 | syntax match NERDTreeDirSlash #/$# containedin=NERDTreeDir conceal contained
+augroup end

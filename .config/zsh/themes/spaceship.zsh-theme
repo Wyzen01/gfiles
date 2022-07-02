@@ -1,7 +1,3 @@
-spaceship() {
-  echo "%(?.🚀.💥) "
-}
-
 directory() {
   local dir=$(shrink_path -f | path)  
 
@@ -40,11 +36,10 @@ node_version() {
 
 
 symbol() {
-  echo "%B%F{%(?.green.red)}❯%f%b "
+  echo "%B%F{%(?.green.red)}➜%f%b "
 }
 
 PROMPT=$'\n'
-# PROMPT+=$'$(spaceship)'
 PROMPT+=$'$(directory)'
 PROMPT+=$'$(git_branch)'
 PROMPT+=$'$(package_version)'
