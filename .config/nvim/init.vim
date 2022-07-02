@@ -31,7 +31,7 @@ set fileencoding=utf-8
 set laststatus=3
 set mouse=a
 set shiftwidth=2
-set signcolumn=number
+set signcolumn=yes
 set so=15
 set softtabstop=2
 
@@ -47,7 +47,7 @@ set splitright
 set termguicolors
 set relativenumber
 
-set statusline=%!StatusLineNormal()
+set statusline=%!Statusline()
 
 let g:mapleader = ' '
 
@@ -127,6 +127,8 @@ nmap <silent> <leader>coc :CocConfig<CR>
 
 nmap <silent> <leader>lzg :FloatermNew --wintype=float --width=0.8 --height=0.8 --position=center lazygit<CR>
 
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
 vmap <silent> <leader>so :sort<CR>
 
 noremap <silent> <C-h> <C-\><C-n><C-w>h
@@ -139,19 +141,23 @@ tnoremap <silent> <C-j> <C-\><C-n><C-w>j
 tnoremap <silent> <C-k> <C-\><C-n><C-w>k
 tnoremap <silent> <C-l> <C-\><C-n><C-w>l
 
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
 command! -nargs=0 SynStack :call SynStack()
-
-autocmd FileType floaterm call FloatermSettings()
-
-autocmd BufEnter * if winnr('$') == 1 && &filetype == 'coc-explorer' | q | endif
 
 autocmd BufNewFile,BufRead *.ejs set filetype=ejs
 autocmd BufNewFile,BufRead *.config set filetype=yaml
 autocmd BufNewFile,BufRead *.js,*.jsx set filetype=javascript.jsx
 autocmd BufNewFile,BufRead *.tsx,*.ts set filetype=typescript.tsx
 autocmd BufNewFile,BufRead *.zsh-theme set filetype=zsh
+
+augroup explorer
+  autocmd!
+  autocmd BufEnter * if winnr('$') == 1 && &filetype == 'coc-explorer' | q | endif
+augroup end
+
+augroup floaterm
+  autocmd!
+  autocmd FileType floaterm setlocal nonumber nocursorline norelativenumber signcolumn=no
+augroup end
 
 function SynStack()
   if !exists("*synstack")
@@ -173,7 +179,7 @@ function ShowDocumentation() abort
   call CocAction('doHover')
 endfunction
 
-function StatusLineNormal() abort
+function Statusline() abort
   let b:leftstatus = ''
   let b:rightstatus = ''
 
@@ -185,8 +191,8 @@ function StatusLineNormal() abort
     let b:leftstatus .= ' %{b:branch}   '
   endif
 
-  let b:leftstatus .= ' %{StatusErrors()} '
-  let b:leftstatus .= ' %{StatusWarnings()}   '
+  let b:leftstatus .= ' %{Warnings()} '
+  let b:leftstatus .= ' %{Errors()}   '
 
   let b:leftstatus .= '-- %{toupper(g:currentmode[mode()])} --'
 
@@ -203,7 +209,7 @@ function StatusLineNormal() abort
   return b:leftstatus . '%=' . b:rightstatus
 endfunction
 
-function StatusWarnings() abort
+function Warnings() abort
   let info = get(b:, 'coc_diagnostic_info', {})
 
   if empty(info) | return '0' | endif
@@ -211,20 +217,12 @@ function StatusWarnings() abort
   return info['warning']
 endfunction
 
-function StatusErrors() abort
+function Errors() abort
   let info = get(b:, 'coc_diagnostic_info', {})
 
   if empty(info) | return '0' | endif
 
   return info['error']
-endfunction
-
-function FloatermSettings() abort
-  setlocal nonumber
-  setlocal nocursorline
-  setlocal norelativenumber
-
-  setlocal signcolumn=no
 endfunction
 
 lua << EOF
